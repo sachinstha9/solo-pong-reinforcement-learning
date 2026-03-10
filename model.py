@@ -10,7 +10,7 @@ class Qnet(nn.Module):
             nn.ReLU(),
             nn.Linear(256, 128),
             nn.ReLU(),
-            nn.Linear(128, 4)
+            nn.Linear(128, 3)
         )
 
     def forward(self, x):

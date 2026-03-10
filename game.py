@@ -1,4 +1,5 @@
 import pygame 
+import random
 
 WIDTH = 1500
 HEIGHT = 1000
@@ -20,19 +21,22 @@ class Game:
         self.paddleHeight = 20
         self.paddlePosition = [(WIDTH / 2)- (self.paddleWidth / 2), 900]
         self.paddleColor = WHITE
-        self.paddleSpeed = 10
+        self.paddleSpeed = 20
 
         self.ballSize = 20
-        self.ballPosition = [self.ballSize, self.ballSize]
+        self.ballPosition = [random.choice(list(range(self.ballSize, WIDTH - self.ballSize, 50))), self.ballSize]
         self.ballColor = RED
-        self.ballSpeed = [10, 8]
+        self.ballSpeed = [10 * random.choice([1, -1]), 8]
 
         self.reset()
 
     def reset(self):
-        self.ballPosition = [self.ballSize, self.ballSize]
+        self.ballPosition = [random.choice(list(range(self.ballSize, WIDTH - self.ballSize, 50))), self.ballSize]
         self.paddlePosition = [(WIDTH / 2)- (self.paddleWidth / 2), 900]
-    
+        self.ballSpeed = [10 * random.choice([1, -1]), 8]
+
+        print("Reset: ", self.ballPosition, self.ballSpeed)
+
     def get_state(self):
         return [
             self.paddlePosition[0] - (self.paddleWidth / 2),
@@ -77,9 +81,9 @@ class Game:
         elif self.ballPosition[1] - (self.ballSize / 2) < 0:
             self.ballPosition[1] = 0 + (self.ballSize / 2)
             self.ballSpeed[1] *= -1
+        elif (self.ballPosition[1] - (self.ballSize / 2) > HEIGHT):
+            self.reset()
 
-        
-        print(self.ballSpeed[1])
         self.draw()
 
     def draw(self):
